@@ -2,8 +2,7 @@
 # https://github.com/birddevelper/NoteBookManager
 
 run:
-	docker compose up -d
-
+	docker compose up --build
 clear:
 	docker compose down
 
