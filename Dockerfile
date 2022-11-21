@@ -25,3 +25,15 @@ RUN ./mvnw package #-DskipTests
 ENTRYPOINT ["java", "-javaagent:./agent/opentelemetry-javaagent.jar", "-Xms6g", "-Xmx6g", "-Dotel.javaagent.configuration-file=./agent/file.properties", "-jar","target/NoteBookManagerRest-0.0.1-SNAPSHOT.jar"]
 # "",
  
+
+
+
+
+# FROM openjdk:8-jdk
+# EXPOSE 8090
+# WORKDIR /app
+# COPY ./target/NoteBookManagerRest-0.0.1-SNAPSHOT.jar NoteBookManagerRest-0.0.1-SNAPSHOT.jar
+# COPY ./agent/opentelemetry-javaagent.jar ./agent/opentelemetry-javaagent.jar
+# COPY ./agent/file.properties ./agent/file.properties
+
+# ENTRYPOINT ["java", "-javaagent:./agent/opentelemetry-javaagent.jar", "-Xms6g", "-Xmx6g", "-Dotel.javaagent.configuration-file=./agent/file.properties", "-jar","NoteBookManagerRest-0.0.1-SNAPSHOT.jar"]
