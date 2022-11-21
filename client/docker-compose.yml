@@ -4,8 +4,6 @@ services:
     image: influxdb:1.8
     ports:
       - '8086:8086'
-    volumes:
-      - influxdb-storage:/var/lib/influxdb
     environment:
       - INFLUXDB_DB=db0
       - INFLUXDB_ADMIN_USER=admin
@@ -14,8 +12,6 @@ services:
     image: chronograf:latest
     ports:
       - '8888:8888'
-    volumes:
-      - chronograf-storage:/var/lib/chronograf
     depends_on:
       - influxdb
     environment:
@@ -26,9 +22,6 @@ services:
     image: grafana/grafana:latest
     ports:
       - '3000:3000'
-    volumes:
-      - grafana-storage:/var/lib/grafana
-      # - ./grafana-provisioning/:/etc/grafana/provisioning
     depends_on:
       - influxdb
     environment:
@@ -39,7 +32,6 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus-storage:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -49,11 +41,6 @@ services:
       - 9090:9090
     restart: always
 
-volumes:
-  influxdb-storage:
-  chronograf-storage:
-  grafana-storage:
-  prometheus-storage:
 
 
 
