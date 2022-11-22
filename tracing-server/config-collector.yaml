@@ -14,7 +14,7 @@ exporters:
       insecure: true
   # datadog:
   #   api:
-  #     key: "0849acfc7bb55ea1ec84f32d926326a9"
+  #     key: ""
 
 service:
   pipelines:

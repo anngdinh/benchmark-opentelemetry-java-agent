@@ -50,22 +50,6 @@ services:
     ports:
       - 9090:9090
     restart: always
-  
-  otelcollector:
-    image: otel/opentelemetry-collector-contrib:latest
-    command: ["--config=/etc/otelcol-contrib/config.yaml"]
-    volumes:
-      - ./agent/config.yaml:/etc/otelcol-contrib/config.yaml
-    ports:
-      - 4317:4317   # OTLP gRPC receiver
-      - 4318:4318   # OTLP http receiver
-    restart: always
-
-  allinone:
-    image: jaegertracing/all-in-one:latest
-    ports:
-      - "16686:16686"
-    restart: always
 
 volumes:
   influxdb-storage:

@@ -1,0 +1,35 @@
+version: '2'
+services:  
+  otelcollector:
+    image: otel/opentelemetry-collector-contrib:latest
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./agent/config-collector.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - 4317:4317   # OTLP gRPC receiver
+      - 4318:4318   # OTLP http receiver
+    restart: always
+
+  allinone:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+    restart: always
+
+volumes:
+  influxdb-storage:
+  grafana-storage:
+  prometheus-storage:
+
+
+
+
+
+
+
+
+
+
+
+
+# https://github.com/jkehres/docker-compose-influxdb-grafana
