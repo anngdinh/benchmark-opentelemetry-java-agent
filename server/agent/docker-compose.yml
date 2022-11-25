@@ -34,7 +34,15 @@ services:
         SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/notebook_manager?createDatabaseIfNotExist=true&useSSL=false
         SPRING_DATASOURCE_USERNAME: root
         SPRING_DATASOURCE_PASSWORD: spring
-      command: [" -javaagent:./agent/opentelemetry-javaagent.jar -Dotel.javaagent.configuration-file=./agent/file.properties "]
+      command:
+        - "-javaagent:./agent/opentelemetry-javaagent.jar"
+        - "-XX:ActiveProcessorCount=6"
+        - "-Xms8g"
+        - "-Xmx12g"
+        - "-Dotel.javaagent.configuration-file=./agent/file.properties"
+        - "-jar"
+        - "./NoteBookManagerRest-0.0.1-SNAPSHOT.jar"
+        # .........................
       deploy:
         resources:
           limits:

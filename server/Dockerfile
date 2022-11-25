@@ -36,5 +36,6 @@ COPY ./NoteBookManagerRest-0.0.1-SNAPSHOT.jar ./NoteBookManagerRest-0.0.1-SNAPSH
 COPY ./opentelemetry-javaagent.jar ./agent/opentelemetry-javaagent.jar
 COPY ./file.properties ./agent/file.properties
 
-ENTRYPOINT ["java",                                                   "-XX:ActiveProcessorCount=6", "-Xms8g", "-Xmx12g",                                                                "-jar","./NoteBookManagerRest-0.0.1-SNAPSHOT.jar"]
-# ENTRYPOINT ["java", "-javaagent:./agent/opentelemetry-javaagent.jar", "-XX:ActiveProcessorCount=6", "-Xms8g", "-Xmx12g", "-Dotel.javaagent.configuration-file=./agent/file.properties", "-jar","target/NoteBookManagerRest-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java"]
+# ENTRYPOINT ["java",                                                   "-XX:ActiveProcessorCount=6", "-Xms8g", "-Xmx12g",                                                                "-jar","./NoteBookManagerRest-0.0.1-SNAPSHOT.jar"]
+# ENTRYPOINT ["java", "-javaagent:./agent/opentelemetry-javaagent.jar", "-XX:ActiveProcessorCount=6", "-Xms8g", "-Xmx12g", "-Dotel.javaagent.configuration-file=./agent/file.properties", "-jar","./NoteBookManagerRest-0.0.1-SNAPSHOT.jar"]
