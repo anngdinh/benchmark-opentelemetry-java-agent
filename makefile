@@ -3,7 +3,7 @@
 
 build:
 	cd ./spring-app && mvn install
-	cp ./spring-app/target/NoteBookManagerRest-0.0.1-SNAPSHOT.jar ./spring-app/jar/NoteBookManagerRest-0.0.1-SNAPSHOT.jar
+	cp ./spring-app/target/NoteBookManagerRest-0.0.1-SNAPSHOT.jar ./server/NoteBookManagerRest-0.0.1-SNAPSHOT.jar
 
 up1:
 	cd ./server/agent && docker-compose up --build

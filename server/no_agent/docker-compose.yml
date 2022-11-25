@@ -21,7 +21,7 @@ services:
       image: notebook-service
       container_name: notebook-service-app     # name of container created from image
       build:
-        context: .                          # path to docker file
+        context: ../     # path to docker file
         dockerfile: Dockerfile              # docker file name
       ports:
         - "8090:8080"                       # notebook service port
@@ -37,10 +37,10 @@ services:
       deploy:
         resources:
           limits:
-            cpus: 7
+            cpus: '7'
             memory: 9G
           reservations:
-            cpus: 4
+            cpus: '4'
             memory: 3G
 
     

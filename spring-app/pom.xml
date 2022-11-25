@@ -70,10 +70,10 @@
             <version>1.6.4</version>
         </dependency>
 
-        <dependency>
+        <!-- <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-influx</artifactId>
-        </dependency>
+        </dependency> -->
 
         <dependency>
             <groupId>io.micrometer</groupId>
