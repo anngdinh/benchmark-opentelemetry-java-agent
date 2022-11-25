@@ -3,8 +3,8 @@ import { check, group } from 'k6';
 
 const config = {
     ip: [
-        { no_agent: '58.84.0.87', agent: '58.84.0.89' },
-        { no_agent: '10.76.0.12', agent: '10.76.0.14' },
+        { agent: '58.84.0.87', no_agent: '58.84.0.89' },
+        { agent: '10.76.0.12', no_agent: '10.76.0.14' },
     ]
 }
 // const curIp = config.ip[1].agent
