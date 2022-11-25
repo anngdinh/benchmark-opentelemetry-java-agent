@@ -20,23 +20,14 @@ const config = {
     ]
 }
 const curTime = config.time[0]
-const curIp = config.ip[0]
+const curIp = config.ip[0].agent
+// const curIp = config.ip[0].agent
 
 
 export const options = {
     thresholds: {},
     scenarios: {
-        no_agent: {
-            executor: 'ramping-vus',
-            startVUs: 0,
-            stages: [
-                { duration: '1m', target: curTime.VUs },
-                { duration: curTime.time, target: curTime.VUs },
-            ],
-            gracefulRampDown: '0s',
-            exec: 'NoAgent'
-        },
-        agent: {
+        cuongpb: {
             executor: 'ramping-vus',
             startVUs: 0,
             stages: [
@@ -47,30 +38,6 @@ export const options = {
         },
     },
 };
-
-for (let key in options.scenarios) {
-    // Each scenario automaticall tags the metrics it generates with its own name
-    // let threshold_req_duration = `http_req_duration{scenario:${key}}`;
-    // let threshold_group_duration = `group_duration{scenario:${key}}`;
-    // let threshold_http_req_failed = `http_req_failed{scenario:${key}}`;
-    // let threshold_http_reqs = `http_reqs{scenario:${key}}`;
-    // let threshold_iterations = `iterations{scenario:${key}}`;
-    // let threshold_checks = `checks{scenario:${key}}`;
-
-    // options.thresholds[threshold_req_duration] = [];
-    // options.thresholds[threshold_group_duration] = [];
-    // options.thresholds[threshold_http_req_failed] = [];
-    // options.thresholds[threshold_http_reqs] = [];
-    // options.thresholds[threshold_iterations] = [];
-    // options.thresholds[threshold_checks] = [];
-
-    // options.thresholds[threshold_req_duration].push('avg<5000');
-    // options.thresholds[threshold_group_duration].push('avg < 5000');
-    // options.thresholds[threshold_http_req_failed].push('rate<0.01');
-    // options.thresholds[threshold_http_reqs].push('rate > 0.01');
-    // options.thresholds[threshold_iterations].push('rate > 0.01');
-    // options.thresholds[threshold_checks].push('rate > 0.5');
-}
 
 function makeid(length = 30) {
     var result = '';
@@ -84,7 +51,7 @@ function makeid(length = 30) {
 
 export default function () {
     group('API uptime check', () => {
-        const url = `http://${curIp.agent}:8090/api/notebooks`
+        const url = `http://${curIp}:8090/api/notebooks`
         const body = {
             name: makeid()
         }
@@ -100,82 +67,32 @@ export default function () {
             "status 1 code should be 200": res => res.status === 200,
         });
 
-        // POST
-        response = http.post(url, JSON.stringify({
-            "name": makeid()
-        }), {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-        check(response, {
-            "status 1 code should be 201": res => res.status === 201,
-        });
+        // // POST
+        // response = http.post(url, JSON.stringify({
+        //     "name": makeid()
+        // }), {
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        // });
+        // check(response, {
+        //     "status 1 code should be 201": res => res.status === 201,
+        // });
 
-        // DELETE
-        // const id = JSON.parse(response)
-        const id = response.json().id
-        // console.log(id)
+        // // DELETE
+        // // const id = JSON.parse(response)
+        // const id = response.json().id
+        // // console.log(id)
 
-        response = http.del(`${url}/${id}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-        check(response, {
-            "status 1 code should be 202": res => res.status === 202,
-        });
-        // console.log(response)
+        // response = http.del(`${url}/${id}`, {
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        // });
+        // check(response, {
+        //     "status 1 code should be 202": res => res.status === 202,
+        // });
+        // // console.log(response)
     });
 
 };
-
-
-
-
-export function NoAgent() {
-    group('API uptime check', () => {
-        const url = `http://${curIp.no_agent}:8090/api/notebooks`
-        const body = {
-            name: makeid()
-        }
-
-        // GET
-        let response = http.get(url + '?page=0&pageSize=100', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        check(response, {
-            "status 1 code should be 200": res => res.status === 200,
-        });
-
-        // POST
-        response = http.post(url, JSON.stringify({
-            "name": makeid()
-        }), {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-        check(response, {
-            "status 1 code should be 201": res => res.status === 201,
-        });
-
-        // DELETE
-        // const id = JSON.parse(response)
-        const id = response.json().id
-        // console.log(id)
-
-        response = http.del(`${url}/${id}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-        check(response, {
-            "status 1 code should be 202": res => res.status === 202,
-        });
-        // console.log(response)
-    });
-}

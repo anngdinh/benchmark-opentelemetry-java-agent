@@ -1,0 +1,72 @@
+version: '2'
+services:
+  influxdb:
+    image: influxdb:1.8
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=db0
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin
+    restart: always
+
+  chronograf:
+    image: chronograf:latest
+    ports:
+      - '8888:8888'
+    depends_on:
+      - influxdb
+    environment:
+      - INFLUXDB_URL=http://influxdb:8086
+      - INFLUXDB_USERNAME=admin
+      - INFLUXDB_PASSWORD=admin
+      - INFLUXDB_DATA_MAX_SERIES_PER_DATABASE=0
+      - INFLUXDB_DATA_MAX_VALUES_PER_TAG=0
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - influxdb
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: always
+  
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-storage:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    restart: always
+
+volumes:
+  influxdb-storage:
+  grafana-storage:
+  prometheus-storage:
+
+
+
+
+
+
+
+
+
+
+
+
+# https://github.com/jkehres/docker-compose-influxdb-grafana
