@@ -5,9 +5,9 @@ scrape_configs:
     static_configs:
     - targets: ['10.76.0.12:8090']
       labels:
-        application: 'No Agent'
+        application: 'Have Agent'
     - targets: ['10.76.0.14:8090']
       labels:
-        application: 'Have Agent'
+        application: 'No Agent'
 
 # .......................

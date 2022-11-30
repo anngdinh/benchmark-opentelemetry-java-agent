@@ -6,9 +6,9 @@ build:
 	cp ./spring-app/target/NoteBookManagerRest-0.0.1-SNAPSHOT.jar ./server/NoteBookManagerRest-0.0.1-SNAPSHOT.jar
 
 up1:
-	cd ./server/agent && docker-compose up --build
+	cd ./server/agent && docker-compose up --build -d
 up2:
-	cd ./server/no_agent && docker-compose up --build
+	cd ./server/no_agent && docker-compose up --build -d
 
 down1:
 	cd ./server/agent && docker-compose down
